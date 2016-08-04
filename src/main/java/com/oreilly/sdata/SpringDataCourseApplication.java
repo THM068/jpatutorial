@@ -1,6 +1,11 @@
 package com.oreilly.sdata;
 
-import com.oreilly.sdata.domains.Role;
+import com.oreilly.sdata.domains.*;
+import com.oreilly.sdata.repositories.AccountOwnerRepository;
+import com.oreilly.sdata.repositories.CompanyRepository;
+import com.oreilly.sdata.repositories.EmployeeRepository;
+import com.oreilly.sdata.repositories.UserRepository;
+import com.oreilly.sdata.services.AccountBandService;
 import com.oreilly.sdata.services.RoleService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +23,11 @@ public class SpringDataCourseApplication {
 
 		ApplicationContext ctx = SpringApplication.run(SpringDataCourseApplication.class, args);
 		RoleService roleService = ctx.getBean(RoleService.class);
+		AccountBandService accountBandService = ctx.getBean(AccountBandService.class);
+		CompanyRepository companyRepository = ctx.getBean(CompanyRepository.class);
+		AccountOwnerRepository accountOwnerRepository = ctx.getBean(AccountOwnerRepository.class);
+		EmployeeRepository employeeRepository = ctx.getBean(EmployeeRepository.class);
+		UserRepository userRepository = ctx.getBean(UserRepository.class);
 
 		String [] roles = { "ROLE_MASTER", "ROLE_BOSS", "ROLE_PARENT"};
 
@@ -43,6 +53,28 @@ public class SpringDataCourseApplication {
 				add("Mary");
 			}
 		};
+
+		accountBandService.findAll().forEach((AccountBand ab)->{
+			System.out.println(ab.toString());
+		});
+
+		companyRepository.findAll().forEach((Company c)->{
+			System.out.println(c.getName());
+		});
+
+		System.out.println("The account owner list");
+		accountOwnerRepository.findAll().forEach((AccountOwner owner)->{
+			System.out.println(owner.getCompany());
+		});
+
+		System.out.println("Employee list");
+		employeeRepository.findAll().forEach((Employee emp)->{
+			System.out.println(emp.getName());
+		});
+
+		userRepository.findAll().forEach((User user)->{
+			System.out.println(user.getUsername());
+		});
 
 	}
 }
