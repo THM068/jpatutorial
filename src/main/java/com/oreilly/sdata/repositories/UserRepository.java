@@ -26,5 +26,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
      //relational operators
+    public List<User> findByPageCountEquals(int pageCount);
+
+    public List<User> findByPageCountGreaterThan(int pageCount);
 
 }
